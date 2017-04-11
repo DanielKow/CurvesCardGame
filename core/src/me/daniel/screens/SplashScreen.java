@@ -1,5 +1,7 @@
 package me.daniel.screens;
 
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.Timer.Task;
 
@@ -7,12 +9,9 @@ import me.daniel.game.MyGame;
 
 public class SplashScreen extends AbstractScreen {
 
-	public SplashScreen(MyGame game) {
+	public SplashScreen(final MyGame game) {
 		super(game);
-	}
-
-	@Override
-	protected void init() {
+		
 		Timer.schedule(new Task() {
 			
 			@Override
@@ -21,6 +20,11 @@ public class SplashScreen extends AbstractScreen {
 			}
 			
 		}, 3);
+	}
+
+	@Override
+	protected void init() {
+		stage.addActor(new Image(new Texture("electrity.jpg")));
 	}
 
 }
