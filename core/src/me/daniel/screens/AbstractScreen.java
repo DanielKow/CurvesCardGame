@@ -24,8 +24,11 @@ public abstract class AbstractScreen implements Screen {
 		stage = new Stage(new StretchViewport(MyGame.WIDTH, MyGame.HEIGHT, camera));
 		batch = new SpriteBatch();
 		Gdx.input.setInputProcessor(stage);
+		init();
 	}
 	
+	protected abstract void init();
+
 	private void createCamera() {
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, MyGame.WIDTH, MyGame.HEIGHT);
@@ -56,7 +59,9 @@ public abstract class AbstractScreen implements Screen {
 
 	@Override
 	public void dispose() {
-		
+		batch.dispose();
+		game.dispose();
+		stage.dispose();
 	}
 
 	/*

@@ -2,6 +2,8 @@ package me.daniel.game;
 
 import com.badlogic.gdx.Game;
 
+import me.daniel.screens.SplashScreen;
+
 public class MyGame extends Game {
 
 	public static final int WIDTH = 800, HEIGHT = 600;
@@ -10,7 +12,7 @@ public class MyGame extends Game {
 	
 	@Override
 	public void create() {
-		
+		setScreen(new SplashScreen(this));
 	}
 
 	/*
