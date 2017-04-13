@@ -6,7 +6,7 @@ import me.daniel.screens.SplashScreen;
 
 public class MyGame extends Game {
 
-	public static final int WIDTH = 800, HEIGHT = 600;
+	public static final int WIDTH = 1920, HEIGHT = 1080;
 	public static final String TITLE = "KRZYWE KARTY 2";
 	private boolean paused;
 	

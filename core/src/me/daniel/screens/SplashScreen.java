@@ -24,7 +24,9 @@ public class SplashScreen extends AbstractScreen {
 
 	@Override
 	protected void init() {
-		stage.addActor(new Image(new Texture("electrity.jpg")));
+		Image img = new Image(new Texture("electrity.jpg"));
+		img.setSize(MyGame.WIDTH, MyGame.HEIGHT);
+		stage.addActor(img);
 	}
 
 }

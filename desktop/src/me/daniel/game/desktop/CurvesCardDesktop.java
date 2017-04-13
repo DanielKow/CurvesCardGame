@@ -12,6 +12,8 @@ public class CurvesCardDesktop {
 		config.height = MyGame.HEIGHT;
 		config.title = MyGame.TITLE;
 		config.resizable = false;
+		config.fullscreen = true;
+		config.vSyncEnabled = true;
 		
 		new LwjglApplication(new MyGame(), config);
 	}

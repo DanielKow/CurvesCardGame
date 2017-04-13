@@ -2,6 +2,7 @@ package me.daniel.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -40,13 +41,21 @@ public abstract class AbstractScreen implements Screen {
 		clearScreen();
 		camera.update();
 		batch.setProjectionMatrix(camera.combined);
-		stage.act();
+		tick();
 		
 		batch.begin();
 		
 		stage.draw();
 		
 		batch.end();
+	}
+
+	private void tick() {
+		stage.act();
+		if(Gdx.input.isKeyPressed(Keys.ESCAPE)) {
+			dispose();
+			Gdx.app.exit();
+		}
 	}
 
 	private void clearScreen() {
