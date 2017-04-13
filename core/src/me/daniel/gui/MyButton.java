@@ -8,12 +8,14 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 
-public class AbstractButton extends Image {
+public class MyButton extends Image {
 	
 	private static String path = "graphics/buttons/";
 	
-	public AbstractButton(final String name) {
+	public MyButton(final String name, float x, float y, float width, float height, final ClickCallback click) {
 		super(new Texture(path+name+"Out.png"));
+		
+		setBounds(x, y, width, height);
 		
 		addListener(new ClickListener() {
 			
@@ -26,7 +28,7 @@ public class AbstractButton extends Image {
 			}
 			
 			public void clicked (InputEvent event, float x, float y) {
-			
+				click.click();
 			}
 			
 		});

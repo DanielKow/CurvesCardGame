@@ -40,7 +40,8 @@ public abstract class AbstractScreen implements Screen {
 		clearScreen();
 		camera.update();
 		batch.setProjectionMatrix(camera.combined);
-	
+		stage.act();
+		
 		batch.begin();
 		
 		stage.draw();
