@@ -29,7 +29,7 @@ public class GameplayScreen extends AbstractScreen {
 	}
 
 	private void initBackground() {
-		Image img = new Image(new Texture("graphics/maps/map.png"));
+		Image img = new Image(new Texture("graphics/maps/map.jpg"));
 		img.setSize(MyGame.WIDTH, MyGame.HEIGHT);
 		secondPlan.addActor(img);
 	}
