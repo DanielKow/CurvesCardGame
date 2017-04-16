@@ -1,45 +1,59 @@
 package me.daniel.gameObjects;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 
 public class GameBoardElement extends Image {
 
-	private boolean active;
+	private boolean active, on;
+	private int animationStage;
+	private float animationDelay;
+	private final static String PATH = "graphics/maps/";
 	
 	public GameBoardElement() {
-		super(new Texture("graphics/maps/boardElement.png"));
-	
+		super(new Texture(PATH+"boardElement.png"));
+		
 		addListener(new ClickListener() {
 			
 			public void enter (InputEvent event, float x, float y, int pointer, Actor fromActor) {
-				setDrawable(new SpriteDrawable(new Sprite(new Texture("graphics/maps/boardElementOn.png"))));;
+				setOn(true);
 			}
 
 			public void exit (InputEvent event, float x, float y, int pointer, Actor toActor) {
-				setDrawable(new SpriteDrawable(new Sprite(new Texture("graphics/maps/boardElement.png"))));;
+				setOn(false);
 			}
 			
 		});
 		
-		addAction(new Action() {
-			
-			@Override
-			public boolean act(float delta) {
-				if(isActive())setDrawable(new SpriteDrawable(new Sprite(new Texture("graphics/maps/boardElementActive.png"))));
-				else setDrawable(new SpriteDrawable(new Sprite(new Texture("graphics/maps/boardElement.png"))));; 
-				return true;
-			}
 		
-		});
 	}
 
+	@Override
+	public void draw(Batch batch, float parentAlpha) {
+		super.draw(batch, parentAlpha);
+		Sprite on = new Sprite(new Texture(PATH+"on"+animationStage+".png")), active = new Sprite(new Texture(PATH+"active"+animationStage+".png"));
+		on.setBounds(getX(), getY(), getWidth(), getHeight());
+		active.setBounds(getX(), getY(), getWidth(), getHeight());
+		
+		if(isOn())on.draw(batch);
+		if(isActive())active.draw(batch);
+	}
+	
+	@Override
+	public void act(float delta) {
+		super.act(delta);
+		animationDelay+=delta;
+		if(animationDelay >= 0.5f) {
+			animationStage = animationStage == 1 ? 0 : 1;
+			animationDelay = 0;
+		}
+	}
+	
 	/*
 	 * 
 	 * Getters and setters
@@ -52,6 +66,14 @@ public class GameBoardElement extends Image {
 
 	public void setActive(boolean active) {
 		this.active = active;
+	}
+
+	public boolean isOn() {
+		return on;
+	}
+
+	public void setOn(boolean on) {
+		this.on = on;
 	}
 	
 }
