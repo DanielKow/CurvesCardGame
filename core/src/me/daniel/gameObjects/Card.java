@@ -1,14 +1,52 @@
 package me.daniel.gameObjects;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
 public class Card extends Image {
 
 	private int hp, armor,attack, cost;
+	private Image frame;
 	
-	public Card(String name, String fraction, CardStats stats) {
-		super(new Texture("graphics/cards/"+name+".png"));
+	public enum Fraction {
+		
+		CAVES_DWARF("cavesDwarf"),
+		ENTHO("entho"),
+		DEMONS("demons"),
+		ORDER("order"),
+		FORGERIN("forgerin"),
+		ROBO("robo"),
+		CONDEMNED("condemned"),
+		ELEMENTS("elements");
+		
+		String fraction;
+		
+		private Fraction(String fraction) {
+			this.fraction = fraction;
+		}
+		
+	}
+	
+	public enum Type {
+		
+		MELEE("Melee"),
+		RANGE("Range");
+		
+		String type;
+		
+		private Type(String type) {
+			this.type = type;
+		}
+		
+	}
+	
+	public Card(String name, CardStats stats, Fraction fraction, Type type) {
+		super(new Texture("graphics/cards/"+fraction.fraction+"/"+name+".png"));
+		
+		frame = new Image(new Texture("graphics/cards/frames/"+fraction.fraction+type.type+".png"));
+		frame.setBounds(0, 0, 200, 150);
+		
 		setHp(stats.getHp());
 		setArmor(stats.getArmor());
 		setAttack(stats.getAttack());
@@ -17,6 +55,13 @@ public class Card extends Image {
 		setSize(150, 200);
 	}
 
+	@Override
+	public void draw(Batch batch, float parentAlpha) {
+		super.draw(batch, parentAlpha);
+		
+		frame.draw(batch, parentAlpha);
+	}
+	
 	/*
 	 * 
 	 * Getters and setters
