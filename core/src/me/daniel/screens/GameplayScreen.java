@@ -5,12 +5,11 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
 import me.daniel.game.MyGame;
-import me.daniel.gameObjects.GameBoardElement;
 
 public class GameplayScreen extends AbstractScreen {
 	
-	private Group firstPlan, secondPlan;
-	private GameBoardElement[][] board;
+	private Group firstPlan, secondPlan, battleZone;
+	private Group[] graveyards, decks, shields, manaZones;
 	
 	public GameplayScreen(MyGame game) {
 		super(game);
@@ -20,57 +19,46 @@ public class GameplayScreen extends AbstractScreen {
 	protected void init() {
 		initPlans();
 		initBackground();
-		initBoard();
-	}
-
-	private void initBoard() {
-		board = new GameBoardElement[5][5];
-		for(int i = 0; i < board.length;i++)
-		{
-			for(int j = 0; j < board[0].length; j++)
-			{
-				if(isGoodPositionOnTheBoard(i, j)) {
-					GameBoardElement element = new GameBoardElement();
-					element.setBounds((MyGame.WIDTH-5*175)/2+i*175, 20+j*210, 150, 200);
-					setBoardElement(i, j, element);
-					firstPlan.addActor(getBoardElement(i, j));
-				}
-			}
-		}
-	}
-
-	private boolean isGoodPositionOnTheBoard(int i, int j) {
-		if(i != 2)return true;
-		else if(j == 0 || j == 4)return true;
-		return false;
 	}
 
 	private void initPlans() {
 		firstPlan = new Group();
 		secondPlan = new Group();
+		battleZone = new Group();
+		graveyards = new Group[2];
+		decks = new Group[2];
+		shields = new Group[2];
+		manaZones = new Group[2];
+		
+		final int Y  = 180, X = 215; 
+		
+		battleZone.setBounds(0, 2*Y, MyGame.WIDTH, 2*Y);
+		manaZones[0].setBounds(0, 0, MyGame.WIDTH, Y);
+		manaZones[1].setBounds(0, 5*Y, MyGame.WIDTH, Y);
+		shields[0].setBounds(0, Y, 5*X, Y);
+		shields[1].setBounds(0, 4*Y, 5*X, Y);
+		decks[0].setBounds(5*X, Y, X, Y);
+		decks[1].setBounds(5*X, 4*Y, X, Y);
+		graveyards[0].setBounds(6*X, Y, X, Y);
+		graveyards[1].setBounds(6*X, 4*Y, X, Y);
 		
 		stage.addActor(secondPlan);
 		stage.addActor(firstPlan);
+		firstPlan.addActor(battleZone);
+		firstPlan.addActor(shields[0]);
+		firstPlan.addActor(shields[1]);
+		firstPlan.addActor(decks[0]);
+		firstPlan.addActor(decks[1]);
+		firstPlan.addActor(manaZones[0]);
+		firstPlan.addActor(manaZones[1]);
+		firstPlan.addActor(graveyards[0]);
+		firstPlan.addActor(graveyards[1]);
 	}
 
 	private void initBackground() {
 		Image img = new Image(new Texture("graphics/maps/map.jpg"));
 		img.setSize(MyGame.WIDTH, MyGame.HEIGHT);
 		secondPlan.addActor(img);
-	}
-
-	/*
-	 * 
-	 * Getters and setters
-	 * 
-	 */
-	
-	public void setBoardElement(int i, int j, GameBoardElement element) {
-		board[i][j] = element;
-	}
-	
-	public GameBoardElement getBoardElement(int i, int j) {
-		return board[i][j];
 	}
 	
 }
